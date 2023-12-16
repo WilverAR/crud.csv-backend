@@ -4,6 +4,7 @@ import com.itana.crud_csvbackend.resale.domain.models.Transaction;
 import com.itana.crud_csvbackend.resale.domain.services.TransactionService;
 import com.itana.crud_csvbackend.resale.infrastructure.repositories.TransactionRepository;
 import com.itana.crud_csvbackend.resale.infrastructure.resources.request.TransactionRequest;
+import com.itana.crud_csvbackend.shared.domain.exceptions.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,38 +27,43 @@ public class TransactionImpl implements TransactionService {
     }
 
     @Override
-    public List<Transaction> getAll() {
+    public List<Transaction> getAllTransactions() {
         return transactionRepository.findAll();
     }
 
     @Override
-    public Optional<Transaction> getById(Long transactionId) {
+    public Optional<Transaction> getTransaction(Long transactionId) {
         return transactionRepository.findById(transactionId);
     }
 
     @Override
-    public Boolean updateTransaction(Long id, TransactionRequest transaction) {
-        return transactionRepository.findById(id).map(transaction1 -> {
-            transaction1.setMonth(transaction.getMonth());
-            transaction1.setTown(transaction.getTown());
-            transaction1.setFlatType(transaction.getFlatType());
-            transaction1.setBlock(transaction.getBlock());
-            transaction1.setStreetName(transaction.getStreetName());
-            transaction1.setStoreyRange(transaction.getStoreyRange());
-            transaction1.setFloorAreaSqm(transaction.getFloorAreaSqm());
-            transaction1.setFlatModel(transaction.getFlatModel());
-            transaction1.setLeaseCommenceDate(transaction.getLeaseCommenceDate());
-            transaction1.setResalePrice(transaction.getResalePrice());
-            transactionRepository.save(transaction1);
-            return true;
-        }).orElse(false);
+    public Optional<Transaction> updateTransaction(Long id, TransactionRequest transactionRequest) {
+        if (!transactionRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Transaction with id " + id + " not found");
+        }
+        Optional<Transaction> existingTransaction = transactionRepository.findById(id);
+        if (existingTransaction.isPresent()) {
+            Transaction transactionToUpdate = existingTransaction.get();
+            transactionToUpdate.setMonth(transactionRequest.getMonth());
+            transactionToUpdate.setTown(transactionRequest.getTown());
+            transactionToUpdate.setFlatType(transactionRequest.getFlatType());
+            transactionToUpdate.setBlock(transactionRequest.getBlock());
+            transactionToUpdate.setStreetName(transactionRequest.getStreetName());
+            transactionToUpdate.setStoreyRange(transactionRequest.getStoreyRange());
+            transactionToUpdate.setFloorAreaSqm(transactionRequest.getFloorAreaSqm());
+            transactionToUpdate.setFlatModel(transactionRequest.getFlatModel());
+            transactionToUpdate.setLeaseCommenceDate(transactionRequest.getLeaseCommenceDate());
+            transactionToUpdate.setResalePrice(transactionRequest.getResalePrice());
+            transactionRepository.save(transactionToUpdate);
+        }
+        return existingTransaction;
     }
 
     @Override
-    public Boolean deleteTransaction(Long id) {
-        return transactionRepository.findById(id).map(transaction -> {
-            transactionRepository.delete(transaction);
-            return true;
-        }).orElse(false);
+    public void deleteTransaction(Long id) {
+        if (!transactionRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Transaction with id " + id + " not found");
+        }
+        transactionRepository.deleteById(id);
     }
 }
