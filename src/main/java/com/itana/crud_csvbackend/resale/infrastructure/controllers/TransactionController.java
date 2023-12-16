@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +35,7 @@ public class TransactionController {
         if (transactionId == null) {
             throw new ValidationException("Transaction not created");
         }
-        Optional<Transaction> transaction = transactionService.getById(transactionId);
+        Optional<Transaction> transaction = transactionService.getTransaction(transactionId);
         if (transaction.isEmpty()) {
             throw new ResourceNotFoundException("Transaction with id " + transactionId + " not found");
         }
@@ -44,23 +45,38 @@ public class TransactionController {
 
     @Transactional(readOnly = true)
     @GetMapping("")
-    public void getAll() {
-
+    public ResponseEntity<List<TransactionResponse>> getAll() {
+        List<Transaction> transactions = transactionService.getAllTransactions();
+        List<TransactionResponse> transactionResponses = transactions.stream()
+                .map(transaction -> modelMapper.map(transaction, TransactionResponse.class))
+                .toList();
+        return new ResponseEntity<>(transactionResponses, HttpStatus.OK);
     }
 
     @Transactional(readOnly = true)
     @GetMapping("/{id}")
-    public void getById(@PathVariable Long id) {
-
+    public ResponseEntity<TransactionResponse> get(@PathVariable Long id) {
+        Optional<Transaction> transaction = transactionService.getTransaction(id);
+        if (transaction.isEmpty()) {
+            throw new ResourceNotFoundException("Transaction with id " + id + " not found");
+        }
+        TransactionResponse transactionResponse = modelMapper.map(transaction, TransactionResponse.class);
+        return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public void update(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest) {
-
+    public ResponseEntity<TransactionResponse> update(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest) {
+        var updatedTransaction = transactionService.updateTransaction(id, transactionRequest);
+        if (updatedTransaction.isEmpty()) {
+            throw new ResourceNotFoundException("Transaction with id " + id + " not found");
+        }
+        TransactionResponse transactionResponse = modelMapper.map(updatedTransaction, TransactionResponse.class);
+        return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        transactionService.deleteTransaction(id);
+        return new ResponseEntity<>("Transaction with given id successfully deleted.", HttpStatus.OK);
     }
 }
