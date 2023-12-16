@@ -14,16 +14,6 @@ public class MapperConfig {
     public ModelMapper modelMapper() {
         ModelMapper modelMapper = new ModelMapper();
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        /*
-        modelMapper.addConverter(context -> {
-            if (context.getSource() instanceof Date) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-                return dateFormat.format(context.getSource());
-            }
-            return context.getSource();
-        });
-
-         */
         return modelMapper;
     }
 }
