@@ -1,18 +1,13 @@
 package com.itana.crud_csvbackend.resale.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itana.crud_csvbackend.shared.domain.entities.AuditableModel;
 import jakarta.persistence.*;
-import jakarta.validation.ValidationException;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 @Entity
