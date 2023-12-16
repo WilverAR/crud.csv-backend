@@ -1,5 +1,6 @@
 package com.itana.crud_csvbackend.resale.domain.models;
 
+import com.itana.crud_csvbackend.shared.domain.entities.AuditableModel;
 import jakarta.persistence.*;
 import jakarta.validation.ValidationException;
 import lombok.Getter;
@@ -13,7 +14,7 @@ import java.util.Date;
 @Setter
 @Entity
 @Table(name = "transactions")
-public class Transaction {
+public class Transaction extends AuditableModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
