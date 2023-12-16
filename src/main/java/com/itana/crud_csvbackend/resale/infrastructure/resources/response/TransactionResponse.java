@@ -1,19 +1,35 @@
 package com.itana.crud_csvbackend.resale.infrastructure.resources.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
-import java.util.Date;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
+
 
 @Getter
+@Setter
 public class TransactionResponse {
+
     private Long id;
-    private Date month;
+
+    private String month;
+
     private String town;
+
     private String flatType;
+
     private String block;
+
     private String streetName;
+
     private String storeyRange;
+
     private Integer floorAreaSqm;
+
     private String flatModel;
-    private Date leaseCommenceDate;
+
+    private String leaseCommenceDate;
+
     private Integer resalePrice;
 }

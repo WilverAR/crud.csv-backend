@@ -1,15 +1,18 @@
 package com.itana.crud_csvbackend.resale.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.itana.crud_csvbackend.shared.domain.entities.AuditableModel;
 import jakarta.persistence.*;
 import jakarta.validation.ValidationException;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -20,7 +23,7 @@ public class Transaction extends AuditableModel {
     private Long id;
 
     @Column(name = "month", nullable = false)
-    private Date month;
+    private String month;
 
     @Column(name = "town", length = 50, nullable = false)
     private String town;
@@ -44,42 +47,12 @@ public class Transaction extends AuditableModel {
     private String flatModel;
 
     @Column(name = "lease_commence_date", nullable = false)
-    private Date leaseCommenceDate;
+    private String leaseCommenceDate;
 
     @Column(name = "resale_price", nullable = false)
     private Integer resalePrice;
 
-    public Transaction(Date month, String town, String flatType, String block, String streetName, String storeyRange, Integer floorAreaSqm, String flatModel, Date leaseCommenceDate, Integer resalePrice) {
-        if (month == null) {
-            throw new ValidationException("Month cannot be null");
-        }
-        if (town == null || town.isEmpty()) {
-            throw new ValidationException("Town cannot be null or empty");
-        }
-        if (flatType == null || flatType.isEmpty()) {
-            throw new ValidationException("Flat type cannot be null or empty");
-        }
-        if (block == null || block.isEmpty()) {
-            throw new ValidationException("Block cannot be null or empty");
-        }
-        if (streetName == null || streetName.isEmpty()) {
-            throw new ValidationException("Street name cannot be null or empty");
-        }
-        if (storeyRange == null || storeyRange.isEmpty()) {
-            throw new ValidationException("Storey range cannot be null or empty");
-        }
-        if (floorAreaSqm == null || floorAreaSqm <= 0) {
-            throw new ValidationException("Floor area sqm cannot be null or less than 1");
-        }
-        if (flatModel == null || flatModel.isEmpty()) {
-            throw new ValidationException("Flat model cannot be null or empty");
-        }
-        if (leaseCommenceDate == null) {
-            throw new ValidationException("Lease commence date cannot be null");
-        }
-        if (resalePrice == null || resalePrice <= 0) {
-            throw new ValidationException("Resale price cannot be null or less than 1");
-        }
+    public Transaction(String month, String town, String flatType, String block, String streetName, String storeyRange, Integer floorAreaSqm, String flatModel, String leaseCommenceDate, Integer resalePrice) {
         this.month = month;
         this.town = town;
         this.flatType = flatType;

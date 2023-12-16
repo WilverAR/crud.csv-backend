@@ -7,6 +7,7 @@ import com.itana.crud_csvbackend.resale.infrastructure.resources.request.Transac
 import com.itana.crud_csvbackend.resale.infrastructure.resources.response.TransactionResponse;
 import com.itana.crud_csvbackend.shared.domain.exceptions.ResourceNotFoundException;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.ValidationException;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -29,17 +30,16 @@ public class TransactionController {
     }
 
     @Transactional
-    @PostMapping("")
-    public ResponseEntity<TransactionResponse> create(@RequestBody TransactionRequest transactionRequest) {
+    @PostMapping
+    public ResponseEntity<TransactionResponse> create(@Valid @RequestBody TransactionRequest transactionRequest) {
         var transactionId = transactionService.createTransaction(transactionRequest);
         if (transactionId == null) {
             throw new ValidationException("Transaction not created");
         }
         Optional<Transaction> transaction = transactionService.getTransaction(transactionId);
-        if (transaction.isEmpty()) {
-            throw new ResourceNotFoundException("Transaction with id " + transactionId + " not found");
-        }
-        TransactionResponse transactionResponse = modelMapper.map(transaction, TransactionResponse.class);
+        TransactionResponse transactionResponse = transaction.map(t -> modelMapper.map(t, TransactionResponse.class))
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction with id " + transactionId + " not found"));
+        System.out.println(transactionResponse);
         return new ResponseEntity<>(transactionResponse, HttpStatus.CREATED);
     }
 
@@ -57,26 +57,24 @@ public class TransactionController {
     @GetMapping("/{id}")
     public ResponseEntity<TransactionResponse> get(@PathVariable Long id) {
         Optional<Transaction> transaction = transactionService.getTransaction(id);
-        if (transaction.isEmpty()) {
-            throw new ResourceNotFoundException("Transaction with id " + id + " not found");
-        }
-        TransactionResponse transactionResponse = modelMapper.map(transaction, TransactionResponse.class);
+        TransactionResponse transactionResponse = transaction.map(t -> modelMapper.map(t, TransactionResponse.class))
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction with id " + id + " not found"));
         return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
     }
 
+    @Transactional
     @PutMapping("/{id}")
     public ResponseEntity<TransactionResponse> update(@PathVariable Long id, @RequestBody TransactionRequest transactionRequest) {
-        var updatedTransaction = transactionService.updateTransaction(id, transactionRequest);
-        if (updatedTransaction.isEmpty()) {
-            throw new ResourceNotFoundException("Transaction with id " + id + " not found");
-        }
-        TransactionResponse transactionResponse = modelMapper.map(updatedTransaction, TransactionResponse.class);
+        Optional<Transaction> updatedTransaction = transactionService.updateTransaction(id, transactionRequest);
+        TransactionResponse transactionResponse = updatedTransaction.map(t -> modelMapper.map(t, TransactionResponse.class))
+                .orElseThrow(() -> new ResourceNotFoundException("Transaction with id " + id + " not found"));
         return new ResponseEntity<>(transactionResponse, HttpStatus.OK);
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         transactionService.deleteTransaction(id);
-        return new ResponseEntity<>("Transaction with given id successfully deleted.", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
