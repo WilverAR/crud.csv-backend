@@ -20,6 +20,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/transactions", produces = "application/json")
+@CrossOrigin(origins = "*")
 @Tag(name = "Transactions", description = "The Transactions API")
 public class TransactionController {
     private final TransactionService transactionService;
