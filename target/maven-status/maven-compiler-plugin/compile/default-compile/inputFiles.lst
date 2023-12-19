@@ -1,0 +1,14 @@
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\shared\infrastructure\mapper\MapperConfig.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\infrastructure\resources\request\TransactionRequest.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\domain\models\Transaction.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\shared\domain\exceptions\ControllerHandlerException.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\domain\services\TransactionService.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\CrudCsvBackendApplication.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\infrastructure\repositories\TransactionRepository.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\shared\domain\exceptions\ErrorMessageException.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\application\implement\TransactionImpl.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\infrastructure\resources\response\TransactionResponse.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\shared\domain\entities\AuditableModel.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\shared\infrastructure\documentation\OpenApiConfiguration.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\resale\infrastructure\controllers\TransactionController.java
+C:\Users\arana\OneDrive\Documentos\GitHub\crud_csv-backend\src\main\java\com\itana\crud_csvbackend\shared\domain\exceptions\ResourceNotFoundException.java
