@@ -6,9 +6,9 @@ spring:
     name: CRUD.CSV
 
   datasource:
-    url: jdbc:mysql://server-sql.mysql.database.azure.com:3306/resale?useSSL=true
-    username: admin_azure
-    password: WarAe*280101
+    url: jdbc:mysql://localhost:3306/resale?useSSL=false
+    username: root
+    password: 280101
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
