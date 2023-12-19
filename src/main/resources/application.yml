@@ -6,12 +6,13 @@ spring:
     name: CRUD.CSV
 
   datasource:
-    url: jdbc:mysql://localhost:3306/resale?useSSL=false&createDatabaseIfNotExist=true
-    username: [YOUR_USERNAME]
-    password: [YOUR_PASSWORD]
+    url: jdbc:mysql://localhost:3306/resale?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: [YOUR_USERNAME_MYSQL]
+    password: [YOUR_PASSWORD_MYSQL]
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
     open-in-view: false
+    show-sql: true
