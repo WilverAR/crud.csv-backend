@@ -17,7 +17,7 @@ public class Transaction extends AuditableModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "month", nullable = false)
+    @Column(name = "month", length = 7, nullable = false)
     private String month;
 
     @Column(name = "town", length = 50, nullable = false)
@@ -41,7 +41,7 @@ public class Transaction extends AuditableModel {
     @Column(name = "flat_model", length = 50, nullable = false)
     private String flatModel;
 
-    @Column(name = "lease_commence_date", nullable = false)
+    @Column(name = "lease_commence_date", length = 4, nullable = false)
     private String leaseCommenceDate;
 
     @Column(name = "resale_price", nullable = false)
