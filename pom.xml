@@ -14,7 +14,7 @@
     <name>crud_csv-backend</name>
     <description>crud_csv-backend</description>
     <properties>
-        <java.version>21</java.version>
+        <java.version>17</java.version>
     </properties>
     <dependencies>
         <dependency>
