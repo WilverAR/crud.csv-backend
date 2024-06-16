@@ -6,7 +6,7 @@ spring:
     name: CRUD.CSV
 
   datasource:
-    url: jdbc:mysql://s-mysql.mysql.database.azure.com:3306/resale?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://s-mysql.mysql.database.azure.com:3306/resale?useSSL=true&serverTimezone=UTC
     username: wilverar
     password: warraw*280101
     driver-class-name: com.mysql.cj.jdbc.Driver
