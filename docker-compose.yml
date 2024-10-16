@@ -1,7 +1,7 @@
 services:
   docker-compose:
-    image: wilverardev/crud_csv:latest
-    container_name: CONTAINER_NAME
+    image: wilverardev/csv_crud:latest
+    container_name: containercsv_crud
     build:
       context: .
       dockerfile: Dockerfile
