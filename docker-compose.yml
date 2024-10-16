@@ -1,0 +1,18 @@
+services:
+  docker-compose:
+    image: wilverardev/crud_csv:latest
+    container_name: CONTAINER_NAME
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:h2:mem:dev_csv;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 280101
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
